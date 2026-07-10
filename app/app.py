@@ -18,18 +18,17 @@ st.set_page_config(
 # ======================================================
 
 import joblib
-import os
 
-# Define paths relative directly to the repository root
-MODEL_PATH = "models/churn_model.pkl"
-COLUMN_PATH = "models/model_columns.pkl"
-SCALER_PATH = "models/scaler.pkl"
-IMAGE_DIR = "images"
+# Since the files are in the root directory, remove the "models/" folder prefix
+MODEL_PATH = "churn_model.pkl"
+COLUMN_PATH = "model_columns.pkl"
+SCALER_PATH = "scaler.pkl"
 
 # Load the machine learning files safely
 model = joblib.load(MODEL_PATH)
 model_columns = joblib.load(COLUMN_PATH)
 scaler = joblib.load(SCALER_PATH)
+
 
 # ======================================================
 # LOAD MODEL & PREPROCESSORS
