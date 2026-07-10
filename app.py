@@ -17,20 +17,17 @@ st.set_page_config(
 # PATHS
 # ======================================================
 
-import os
 import joblib
 
-# Temporary Debugging: Let's see what files are actually here
-print("Current Working Directory Content:", os.listdir("."))
-if os.path.exists("models"):
-    print("Content of models folder:", os.listdir("models"))
-else:
-    print("The 'models' folder does NOT exist at the root!")
+# Since the files are in the root directory, remove the "models/" folder prefix
+MODEL_PATH = "churn_model.pkl"
+COLUMN_PATH = "model_columns.pkl"
+SCALER_PATH = "scaler.pkl"
 
-# Standard relative paths
-MODEL_PATH = "models/churn_model.pkl"
-COLUMN_PATH = "models/model_columns.pkl"
-SCALER_PATH = "models/scaler.pkl"
+# Load the machine learning files safely
+model = joblib.load(MODEL_PATH)
+model_columns = joblib.load(COLUMN_PATH)
+scaler = joblib.load(SCALER_PATH)
 
 
 # ======================================================
