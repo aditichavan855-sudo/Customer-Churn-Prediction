@@ -241,6 +241,17 @@ if predict:
     # Numerical Features
     # ----------------------------
 
+    # Force numeric columns to float64 up front. pd.DataFrame(0, ...) makes
+    # every column int64 by default, and Tenure Months later gets an int
+    # value from the slider, so that column stays int64. scaler.transform()
+    # always returns float64, and newer pandas raises a TypeError instead of
+    # silently upcasting int64 -> float64 on assignment. Casting here avoids
+    # that entirely.
+    numeric_columns = ["Tenure Months", "Monthly Charges", "Total Charges"]
+    for col in numeric_columns:
+        if col in input_df.columns:
+            input_df[col] = input_df[col].astype(float)
+
     numeric_features = {
         "Tenure Months": tenure,
         "Monthly Charges": monthly,
@@ -285,11 +296,10 @@ if predict:
     # ----------------------------
     # Scale Numerical Features
     # ----------------------------
-    numeric_columns = ["Tenure Months", "Monthly Charges", "Total Charges"]
-    
+
     if all(col in input_df.columns for col in numeric_columns):
         scaled_values = scaler.transform(input_df[numeric_columns].values)
-        input_df.loc[:, numeric_columns] = scaled_values
+        input_df[numeric_columns] = scaled_values
 
     # ----------------------------
     # Prediction
